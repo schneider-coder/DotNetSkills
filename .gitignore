@@ -54,3 +54,5 @@ TestResult.xml
 nunit-*.xml
 /SkillsQuickstart/.vs/SkillsQuickstart
 /BRIDGE_PROMPT.md
+/nul
+/.claude/settings.local.json
