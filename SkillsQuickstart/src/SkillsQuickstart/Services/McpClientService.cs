@@ -16,7 +16,7 @@ public class McpClientService : IMcpClientService
 {
     private readonly McpServersConfig _config;
     private readonly IConfiguration _configuration;
-    private readonly Dictionary<string, IMcpClient> _clients = new();
+    private readonly Dictionary<string, McpClient> _clients = new();
     private readonly Dictionary<string, (string ServerName, McpClientTool Tool)> _toolRegistry = new();
     private bool _initialized;
 
@@ -84,7 +84,7 @@ public class McpClientService : IMcpClientService
                 }
 
                 // Create and connect the client
-                var client = await McpClientFactory.CreateAsync(
+                var client = await McpClient.CreateAsync(
                     new StdioClientTransport(transportConfig),
                     clientOptions);
 
@@ -168,7 +168,7 @@ public class McpClientService : IMcpClientService
 
             // Extract text content from the result
             var textParts = result.Content
-                .Where(c => c.Type == "text")
+                .OfType<TextContentBlock>()
                 .Select(c => c.Text)
                 .Where(t => t != null);
 
